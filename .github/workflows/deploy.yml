@@ -3,6 +3,7 @@ name: Deploy
 on:
  release:
   types: [published]
+  tags: 'v1'
 
 jobs:
  deploy:
