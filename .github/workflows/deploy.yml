@@ -1,16 +1,11 @@
 name: Deploy 
-
 on:
  release:
   types: [published]
-
-
-jobs:
- build:
- 
-   - name: Deploy to GitHub Pages
-    uses: peaceiris/actions-gh-pages@v1
-    with:
-     github_token: ${{ secrets.GITHUB_TOKEN }}
-     publish_dir: ./_site
-     keep_files: true
+  jobs:
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v1
+      with:
+       github_token: ${{ secrets.GITHUB_TOKEN }}
+       publish_dir: ./_site
+       keep_files: true
