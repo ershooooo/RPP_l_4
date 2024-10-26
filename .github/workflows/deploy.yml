@@ -5,12 +5,11 @@ on:
   types: [published]
 
 jobs:
- deploy: # Задача названа "deploy"
+ deploy:
   runs-on: ubuntu-latest
   steps:
-   - uses: actions/checkout@v3
    - name: Deploy to GitHub Pages
-     uses: peaceiris/actions-gh-pages@v3 # Используем v3
+     uses: peaceiris/actions-gh-pages@v1
      with:
       github_token: ${{ secrets.GITHUB_TOKEN }}
       publish_dir: ./_site
