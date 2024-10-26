@@ -1,11 +1,17 @@
-name: Deploy 
+name: Deploy
+
 on:
  release:
   types: [published]
-  jobs:
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v1
-      with:
-       github_token: ${{ secrets.GITHUB_TOKEN }}
-       publish_dir: ./_site
-       keep_files: true
+
+jobs:
+ deploy: # Задача названа "deploy"
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v3
+   - name: Deploy to GitHub Pages
+     uses: peaceiris/actions-gh-pages@v3 # Используем v3
+     with:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      publish_dir: ./_site
+      keep_files: true
