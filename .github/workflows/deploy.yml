@@ -10,10 +10,8 @@ jobs:
   steps:
    - name: Checkout code
      uses: actions/checkout@v4
-   - name: Create Release Directory
-     run: mkdir -p _site/{{ release.name }}
-   - name: Copy Site Content
-     run: cp -r ./* _site/{{ release.name }}
+   - name: Create v1 directory
+     run: mkdir -p _site/v1
    - name: Deploy to GitHub Pages
      uses: peaceiris/actions-gh-pages@v3
      with:
