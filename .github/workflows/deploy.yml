@@ -11,10 +11,18 @@ jobs:
    - name: Checkout code
      uses: actions/checkout@v4
    - name: Create v1 directory
-     run: mkdir -p _site/v1
+     run: |
+       VERSION-${{ github.ref_name }}
+       SITE_DIR-"./public/v${VERSION}"
+       mkdir -p "$SITE_DIR"
+
+       files_to_copy=("en" "ru" "index.html")
+
+       for file in "${files_to_copy[@]}"; do
+          cp -r "./${file}" "SITE_DIR/"
+       done
    - name: Deploy to GitHub Pages
-     uses: peaceiris/actions-gh-pages@v3
+     uses: peaceiris/actions-gh-pages@v4
      with:
       github_token: ${{ secrets.GITHUB_TOKEN }}
-      publish_dir: ./_site
-      keep_files: true
+      
