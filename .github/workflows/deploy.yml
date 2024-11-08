@@ -10,7 +10,7 @@ jobs:
   steps:
    - name: Checkout code
      uses: actions/checkout@v4
-   - name: Create v1 directory
+   - name: Create version directory
      run: |
        VERSION-${{ github.ref_name }}
        SITE_DIR-"./public/v${VERSION}"
@@ -19,7 +19,7 @@ jobs:
        files_to_copy=("en" "ru" "index.html")
 
        for file in "${files_to_copy[@]}"; do
-          cp -r "./${file}" "SITE_DIR/"
+          cp -r "./${file}" "$SITE_DIR/"
        done
    - name: Deploy to GitHub Pages
      uses: peaceiris/actions-gh-pages@v4
