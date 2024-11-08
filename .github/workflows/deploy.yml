@@ -14,15 +14,15 @@ jobs:
     - name: Create versioned directory
       run: |
         VERSION=${{ github.ref_name }}
-        VERSION_DIR="./public/v${VERSION}"
-        mkdir -p "$VERSION_DIR"
+        SITE="./public/v${VERSION}"
+        mkdir -p "$SITE"
 
         # Список файлов и каталогов для копирования
         files_to_copy=("en" "ru" "index.html")
 
         # Копирование в папку с версией
         for file in "${files_to_copy[@]}"; do
-          cp -r "./${file}" "$VERSION_DIR/"
+          cp -r "./${file}" "$SITE/"
         done
 
     - name: Deploy to GitHub Pages
