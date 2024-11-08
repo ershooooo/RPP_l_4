@@ -1,20 +1,28 @@
-name: Deploy
+name: CI/CD Pipeline
 
 on:
- release:
-  types: [published]
+  release:
+    types: [created]
 
 jobs:
- deploy:
-  runs-on: ubuntu-latest
-  steps:
-   - name: Checkout code
-     uses: actions/checkout@v4
-   - name: Create v1 directory
-     run: mkdir -p _site/v1
-   - name: Deploy to GitHub Pages
-     uses: peaceiris/actions-gh-pages@v3
-     with:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
-      publish_dir: ./_site
-      keep_files: true
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      - name: Build the application
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
