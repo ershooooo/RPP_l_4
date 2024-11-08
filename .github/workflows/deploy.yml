@@ -1,29 +1,33 @@
-name: Deploy
+name: Deploy Multilingual Site
 
 on:
- release:
-  types: [published]
+  release:
+    types: [published]
 
 jobs:
- deploy:
-  runs-on: ubuntu-latest
-  steps:
-   - name: Checkout code
-     uses: actions/checkout@v4
-   - name: Create version directory
-     run: |
-       VERSION-${{ github.ref_name }}
-       VERSION_DIR-"./public/v${VERSION}"
-       mkdir -p "$VERSION_DIR"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-       files_to_copy=("en" "ru" "index.html")
+    - name: Create versioned directory
+      run: |
+        VERSION=${{ github.ref_name }}
+        VERSION_DIR="./public/v${VERSION}"
+        mkdir -p "$VERSION_DIR"
 
-       for file in "${files_to_copy[@]}"; do
+        # Список файлов и каталогов для копирования
+        files_to_copy=("en" "ru" "index.html")
+
+        # Копирование в папку с версией
+        for file in "${files_to_copy[@]}"; do
           cp -r "./${file}" "$VERSION_DIR/"
-       done
-   - name: Deploy to GitHub Pages
-     uses: peaceiris/actions-gh-pages@v4
-     with:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
-      publish_dir: ./VERSION_DIR
-      keep_files: true
+        done
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        keep_files: true
