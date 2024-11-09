@@ -16,11 +16,7 @@ jobs:
         VERSION=${{ github.ref_name }}
         SITE="./public/v${VERSION}"
         mkdir -p "$SITE"
-
-        # Список файлов и каталогов для копирования
         files_to_copy=("en" "ru" "index.html")
-
-        # Копирование в папку с версией
         for file in "${files_to_copy[@]}"; do
           cp -r "./${file}" "$SITE/"
         done
